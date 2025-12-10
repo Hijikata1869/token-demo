@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: token_demo_development
+      POSTGRES_USER: token_demo_user
+      POSTGRES_PASSWORD: token_demo_password
+    volumes:
+      - token-demo-db-data:/var/lib/postgresql/data
+  api:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - "3001:3001"
+    volumes:
+      - .:/token-demo
+      - token-demo-bundle-data:/token-demo/vendor/bundle
+volumes:
+  token-demo-db-data:
+  token-demo-bundle-data:
